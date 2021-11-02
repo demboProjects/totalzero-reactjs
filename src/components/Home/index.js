@@ -10,11 +10,12 @@ export default function Header() {
     const { auth } = context;
 
     useEffect(() => {
-        console.log(auth.token);
-        if (auth.token) {
+        const token = localStorage.getItem("@token:totalzero");
+        console.log(token);
+        if (token) {
             api.get("/users", {
                 headers: {
-                    Authorization: `Bearer ${auth.token}`
+                    Authorization: `Bearer ${token}`
                 }
             }
             ).then(response => {
@@ -22,7 +23,7 @@ export default function Header() {
             });
 
         }
-    }, [auth.token]);
+    }, []);
     return (
         <div className="container">
             <table>
