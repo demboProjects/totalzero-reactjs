@@ -1,22 +1,30 @@
 import React, { useState } from "react";
 import api from "../../services/api"
 import "./styles.css"
-
-/**
- *  name: String,
-    email: String,
-    username: String,
-    password: String,
-    phone: String,
- */
+import { useHistory } from "react-router-dom"
 
 function Register() {
+    const history = useHistory();
 
     const [usuario, setUsuario] = useState({});
 
+    function handleChange(e) {
+        setUsuario({
+            ...usuario, [e.target.name]: e.target.value
+        });
+    }
+
     function handleForm(e) {
         e.preventDefault();
-        console.log(usuario);
+
+        api.post("/users", usuario).then(response => {
+            console.log(response);
+            history.push("/")
+            alert("cadastro feito com sucesso");
+        }).catch(error => {
+            console.log(error);
+            alert("Erro ao cadastrar novo usuario")
+        });
     }
 
     return (
@@ -25,28 +33,29 @@ function Register() {
                 <h2>Cadastro de Usuários</h2>
                 <div className="row">
                     <span>Nome</span>
-                    <input type="text" onChange={(e) => setUsuario({ ...usuario, name: e.target.value })} ></input>
+                    <input type="text" name="name" onChange={handleChange} ></input>
                 </div>
                 <div className="row">
                     <span>Email</span>
-                    <input type="text" onChange={(e) => setUsuario({ ...usuario, email: e.target.value })}></input>
+                    <input type="text" name="email" onChange={handleChange}></input>
                 </div>
                 <div className="row">
                     <span>Usuario</span>
-                    <input type="text" onChange={(e) => setUsuario({ ...usuario, username: e.target.value })}></input>
+                    <input type="text" name="username" onChange={handleChange}></input>
                 </div>
                 <div className="row">
                     <span>Senha</span>
-                    <input type="text" onChange={(e) => setUsuario({ ...usuario, password: e.target.value })}></input>
+                    <input type="password" name="password" onChange={handleChange}></input>
                 </div>
                 <div className="row">
                     <span>Telefone</span>
-                    <input type="text" onChange={(e) => setUsuario({ ...usuario, phone: e.target.value })}></input>
+                    <input type="text" name="phone" onChange={handleChange}></input>
                 </div>
                 <div className="row">
                     <button>cadastrar</button>
                 </div>
             </form>
+
         </div>
     )
 

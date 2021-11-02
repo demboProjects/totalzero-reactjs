@@ -5,7 +5,10 @@ header{
     height: 40px;
     background: rgb(34, 34, 34);
     align-items: center;
-    /* justify-content: end; */
+    justify-content: space-between;
+}
+header strong{
+    color: white;
 }
 
 header a{
